@@ -12,7 +12,7 @@ var quiz = {
 		},
 		{
 			question     : "What is the capital of Mongolia?",
-			choices      : ["Konakry", "Timbuctu", "Ulanbator", "Sofia"],
+			choices      : ["Konakry", "Timbuctu", "Ulan Bator", "Sofia"],
 			correctAnswer: 2
 		},
 		{
