@@ -17,7 +17,7 @@ var quiz = {
 		},
 		{
 			question     : "Who is the strongest superhero?",
-			choices      : ["Spiderman", "Batman", "Superman" ],
+			choices      : ["Spiderman", "Batman", "Superman", "Wonder Woman", "Thor" ],
 			correctAnswer: 2
 		},
 		{
