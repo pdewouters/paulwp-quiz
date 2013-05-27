@@ -7,7 +7,7 @@ var quiz = {
 		},
 		{
 			question     : "Who starred in Terminator 2?",
-			choices      : ["Tim Robbins", "Arnold Schwarzenegger", "Bruce Willis"],
+			choices      : ["Tim Robbins", "Arnold Schwarzenegger", "Bruce Willis", "Jim Carrey"],
 			correctAnswer: 1
 		},
 		{
