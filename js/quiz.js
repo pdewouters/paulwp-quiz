@@ -103,18 +103,18 @@ var quiz = {
 
 
 			// if theres a user choice for this, check it
-			if(i == this.userChoices[position]){
+			if (i == this.userChoices[position]) {
 				choice.checked = true;
 			}
 		}
 
 	},
 
-	calculateScore : function(){
+	calculateScore: function () {
 		// first reset score to zero
 		this.score = 0;
-		for(var i=0;i< this.allQuestions.length;i++){
-			if(this.userChoices[i] == this.allQuestions[i].correctAnswer){
+		for (var i = 0; i < this.allQuestions.length; i++) {
+			if (this.userChoices[i] == this.allQuestions[i].correctAnswer) {
 				this.score++;
 			}
 		}
@@ -147,10 +147,8 @@ var quiz = {
 			}
 
 			// on last question, enable submit
-			if(this.currentPosition == this.allQuestions.length -1){
-
+			if (this.currentPosition == this.allQuestions.length - 1) {
 				var btnSubmit = document.getElementById('btnSubmit');
-
 				btnSubmit.disabled = false;
 			}
 		} else {
@@ -159,11 +157,12 @@ var quiz = {
 	},
 
 	submitHandler: function (e) {
+
 		e.preventDefault();
+
 		if (this.userMadeSelection()) {
 			this.calculateScore();
 			alert("Your final score: " + this.score);
-
 		} else {
 			alert("Please select a choice");
 		}
@@ -186,27 +185,6 @@ var quiz = {
 
 	init: function () {
 
-		// show the first question
-
-		this.displayQuestion(this.currentPosition);
-
-
-		var btnSubmit = document.getElementById('btnSubmit');
-
-		btnSubmit.disabled = true;
-
-		this.setNavButtonsState();
-
-	}
-
-
-};
-
-// start the quiz
-(function ($) {
-	"use strict";
-	$(function () {
-
 		// attach event handlers
 		$('a#btnPrev').on('click', function () {
 			quiz.prevHandler();
@@ -220,11 +198,31 @@ var quiz = {
 			quiz.submitHandler(e);
 		});
 
-		$('#quiz-form').on('click','input[type=radio]', function(e){
+		$('#quiz-form').on('click', 'input[type=radio]', function (e) {
 			quiz.saveChoice(e);
 		});
 
+		// show the first question
+		this.displayQuestion(this.currentPosition);
+
+		var btnSubmit = document.getElementById('btnSubmit');
+
+		btnSubmit.disabled = true;
+
+		this.setNavButtonsState();
+
+	}
+
+
+};
+
+(function ($) {
+	"use strict";
+	$(function () {
+
+		// start the quiz
 		quiz.init();
+
 	});
 }(jQuery));
 
