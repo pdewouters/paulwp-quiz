@@ -6,8 +6,17 @@
 </head>
 <body>
 <h1>Welcome to the quiz!</h1>
-
-<div id="score"></div>
+<form id="loginForm" method="POST" action="#">
+	<div>
+		<input type="text" name="username" id="username" />
+		<label for="username">Username</label>
+	</div>
+	<div>
+		<input type="password" name="userpass" id="userpass" />
+		<label for="userpass">Password</label>
+	</div>
+	<input type="submit" value="Login" />
+</form>
 <form id="quiz-form" action="#" method="POST">
 	<fieldset>
 		<legend></legend>
