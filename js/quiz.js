@@ -59,7 +59,6 @@ var quiz = {
 		}
 
 		this.userChoices[this.currentPosition] = userChoice;
-		console.log(this.userChoices.toString());
 	},
 
 	displayQuestion: function (position) {
