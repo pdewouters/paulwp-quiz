@@ -46,7 +46,7 @@ var quiz = {
 		return false;
 	},
 
-	saveChoice: function () {
+	saveChoice: function (e) {
 		// get choices
 		var quizForm = document.getElementById('quiz-form');
 		var choices = quizForm.elements['choice'];
@@ -59,6 +59,7 @@ var quiz = {
 		}
 
 		this.userChoices[this.currentPosition] = userChoice;
+		console.log(this.userChoices.toString());
 	},
 
 	displayQuestion: function (position) {
@@ -110,6 +111,8 @@ var quiz = {
 	},
 
 	calculateScore : function(){
+		// first reset score to zero
+		this.score = 0;
 		for(var i=0;i< this.allQuestions.length;i++){
 			if(this.userChoices[i] == this.allQuestions[i].correctAnswer){
 				this.score++;
@@ -121,9 +124,6 @@ var quiz = {
 
 		// check if user selected something
 		if (this.userMadeSelection()) {
-			// save answer
-			this.saveChoice();
-
 			// if there is a previous question, display it
 			if (this.currentPosition > 0) {
 				this.displayQuestion(--this.currentPosition);
@@ -140,9 +140,6 @@ var quiz = {
 
 		// check if user selected something
 		if (this.userMadeSelection()) {
-			// save answer
-			this.saveChoice();
-
 			// display next question
 			if (this.currentPosition < this.allQuestions.length - 1) {
 				this.displayQuestion(++this.currentPosition);
@@ -164,7 +161,6 @@ var quiz = {
 	submitHandler: function (e) {
 		e.preventDefault();
 		if (this.userMadeSelection()) {
-			this.saveChoice();
 			this.calculateScore();
 			alert("Your final score: " + this.score);
 
@@ -222,6 +218,10 @@ var quiz = {
 
 		$('input#btnSubmit').on('click', function (e) {
 			quiz.submitHandler(e);
+		});
+
+		$('#quiz-form').on('click','input[type=radio]', function(e){
+			quiz.saveChoice(e);
 		});
 
 		quiz.init();
