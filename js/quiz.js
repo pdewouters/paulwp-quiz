@@ -33,9 +33,10 @@ var quiz = {
 	userChoices: [],
 
 	userMadeSelection: function () {
+		"use strict";
 		// get choices
 		var quizForm = document.getElementById('quiz-form');
-		var choices = quizForm.elements['choice'];
+		var choices = quizForm.elements.choice;
 
 		for (var i = 0; i < choices.length; i++) {
 			if (choices[i].checked) {
@@ -47,14 +48,20 @@ var quiz = {
 	},
 
 	saveChoice: function (e) {
+		"use strict";
+
 		// get choices
 		var quizForm = document.getElementById('quiz-form');
-		var choices = quizForm.elements['choice'];
+		var choices = quizForm.elements.choice;
 		var userChoice;
 
 		for (var i = 0; i < choices.length; i++) {
+			choices[i].parentNode.className = "choice";
 			if (choices[i].checked) {
-				userChoice = parseInt(choices[i].value);
+				userChoice = parseInt(choices[i].value, 10);
+
+				// add styles
+				choices[i].parentNode.className = "currentChoice";
 			}
 		}
 
@@ -62,6 +69,8 @@ var quiz = {
 	},
 
 	displayQuestion: function (position) {
+		"use strict";
+
 		// get the form element
 		var quizForm = document.getElementById('quiz-form');
 
@@ -69,16 +78,23 @@ var quiz = {
 		var legend = quizForm.getElementsByTagName('legend');
 
 		// insert the question text
-		legend[0].innerHTML = this.allQuestions[position].question;
+		legend[0].appendChild(document.createTextNode(this.allQuestions[position].question));
 
 		// get the choices div
 		var choicesContainer = document.getElementById('choices');
 
 		// clear choices
-		choicesContainer.innerHTML = "";
+		while(choicesContainer.hasChildNodes()) {
+			choicesContainer.removeChild(choicesContainer.lastChild);
+		}
 
 		// display choices
 		for (var i = 0; i < this.allQuestions[position].choices.length; i++) {
+
+			// create the wrapper div
+			var radioDiv = document.createElement('div');
+			radioDiv.className = "choice";
+			choicesContainer.appendChild(radioDiv);
 
 			// create a new element
 			var choice = document.createElement('input');
@@ -93,16 +109,15 @@ var quiz = {
 			var label = document.createElement('label');
 
 			// set the label attributes and text
-			label.innerHTML = this.allQuestions[position].choices[i] + '<br>';
+			label.appendChild(document.createTextNode(this.allQuestions[position].choices[i]));
 			label.setAttribute('for', i.toString());
 
 			// add the choice to the container
-			choicesContainer.appendChild(choice);
-			choicesContainer.appendChild(label);
+			radioDiv.appendChild(choice);
+			radioDiv.appendChild(label);
 
-
-			// if theres a user choice for this, check it
-			if (i == this.userChoices[position]) {
+			// if there's a user choice for this, check it
+			if (i === this.userChoices[position]) {
 				choice.checked = true;
 			}
 		}
@@ -110,16 +125,19 @@ var quiz = {
 	},
 
 	calculateScore: function () {
+		"use strict";
+
 		// first reset score to zero
 		this.score = 0;
 		for (var i = 0; i < this.allQuestions.length; i++) {
-			if (this.userChoices[i] == this.allQuestions[i].correctAnswer) {
+			if (this.userChoices[i] === this.allQuestions[i].correctAnswer) {
 				this.score++;
 			}
 		}
 	},
 
 	prevHandler: function () {
+		"use strict";
 
 		// check if user selected something
 		if (this.userMadeSelection()) {
@@ -129,13 +147,14 @@ var quiz = {
 				this.setNavButtonsState();
 			}
 		} else {
-			alert("Please make a choice");
+			window.alert("Please make a choice");
 		}
 
 
 	},
 
 	nextHandler: function () {
+		"use strict";
 
 		// check if user selected something
 		if (this.userMadeSelection()) {
@@ -146,43 +165,46 @@ var quiz = {
 			}
 
 			// on last question, enable submit
-			if (this.currentPosition == this.allQuestions.length - 1) {
+			if (this.currentPosition === this.allQuestions.length - 1) {
 				var btnSubmit = document.getElementById('btnSubmit');
 				btnSubmit.disabled = false;
 			}
 		} else {
-			alert("Please make a choice");
+			window.alert("Please make a choice");
 		}
 	},
 
 	submitHandler: function (e) {
+		"use strict";
 
 		e.preventDefault();
 
 		if (this.userMadeSelection()) {
 			this.calculateScore();
-			alert("Your final score: " + this.score);
+			window.alert("Your final score: " + this.score);
 		} else {
-			alert("Please select a choice");
+			window.alert("Please select a choice");
 		}
 
 	},
 
 	setNavButtonsState: function () {
+		"use strict";
 
 		var btnPrev = document.getElementById('btnPrev');
 		var btnNext = document.getElementById('btnNext');
 
-		if (this.currentPosition == 0) {
+		if (this.currentPosition === 0) {
 			btnPrev.disabled = true;
 		}
 
-		if (this.currentPosition == this.allQuestions.length - 1) {
+		if (this.currentPosition === this.allQuestions.length - 1) {
 			btnNext.disabled = true;
 		}
 	},
 
 	init: function () {
+		"use strict";
 
 		// attach event handlers
 		$('a#btnPrev').on('click', function () {
@@ -224,5 +246,3 @@ var quiz = {
 
 	});
 }(jQuery));
-
-
